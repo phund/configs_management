@@ -4,7 +4,7 @@ class AppConfigsController < ApplicationController
   # GET /app_configs
   # GET /app_configs.json
   def index
-    @app_configs = AppConfig.all
+    @app_configs = AppConfig.order(name: 1)
   end
 
   # GET /app_configs/1
@@ -72,12 +72,19 @@ class AppConfigsController < ApplicationController
     def app_config_params
       app_params = params.require(:app_config).permit(:name, :type, :development_configs, :staging_configs, :test_configs, :production_configs)
       configs = nil
+      enscrypt_infos = {}
       AppConfig::ConfigEnvs::ALL.each do |e|
         params_key = "#{e}_configs"
         next if !app_params[params_key.to_sym]
         configs = HashWithIndifferentAccess.new(YAML.load(app_params[params_key.to_sym]))
-        app_params[e] = configs[e] if configs[e]
+        if configs[e]
+          configs[e].each do |k,v|
+            configs[e][k] = Digest::SHA1.hexdigest(v.to_s)
+          end
+          app_params[e] = configs[e]
+        end
       end
+
       app_params
     end
 end

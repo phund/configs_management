@@ -17,4 +17,6 @@ class AppConfig
   field :staging, type: Hash
   field :test, type: Hash
   field :production, type: Hash
+
+  validates_uniqueness_of :name
 end

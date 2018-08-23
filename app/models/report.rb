@@ -1,7 +1,7 @@
 class Report
   IGNORE_CONFIGS = ['SYSOP_USERNAME', '']
   def self.check_duplicates(type: '')
-    configs = type.blank? ? AppConfig.all : AppConfig.where(type: type)
+    configs = type.blank? ? AppConfig.order(name: 1) : AppConfig.where(type: type).order(name: 1)
     keys = {}
     configs.each do |conf|
       AppConfig::ConfigEnvs::STG_PRD.each do |e|
