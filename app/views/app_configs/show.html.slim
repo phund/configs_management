@@ -1,0 +1,24 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @app_config.name
+p
+  strong Type:
+  = @app_config.type
+p
+  strong Development:
+  = @app_config.development
+p
+  strong Test:
+  = @app_config.staging
+p
+  strong Staging:
+  = @app_config.test
+p
+  strong Production:
+  = @app_config.production
+
+=> link_to 'Edit', edit_app_config_path(@app_config)
+'|
+=< link_to 'Back', app_configs_path

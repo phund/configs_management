@@ -1,0 +1,28 @@
+h1 Listing app_configs
+
+=< link_to 'Report', reports_path
+table
+  thead
+    tr
+      th Name
+      th Development?
+      th Staging?
+      th Production?
+      th
+      th
+      th
+
+  tbody
+    - @app_configs.each do |app_config|
+      tr
+        td = app_config.name
+        td = !!app_config.development
+        td = !!app_config.staging
+        td = !!app_config.production
+        td = link_to 'Show', app_config
+        td = link_to 'Edit', edit_app_config_path(app_config)
+        td = link_to 'Destroy', app_config, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New App config', new_app_config_path

@@ -1,0 +1,27 @@
+= form_for @app_config do |f|
+  - if @app_config.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@app_config.errors.count, "error")} prohibited this app_config from being saved:"
+      ul
+        - @app_config.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :type
+    = f.text_field :type
+  .field
+    = f.label :development_configs
+    = f.text_area :development_configs
+  .field
+    = f.label :staging_configs
+    = f.text_area :staging_configs
+    .field
+    = f.label :test_configs
+    = f.text_area :test_configs
+  .field
+    = f.label :production_configs
+    = f.text_area :production_configs
+  .actions = f.submit
